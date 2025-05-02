@@ -75,11 +75,11 @@ const Settings = {
       </div>
       <form @submit.prevent="saveSettings">
         <div>
-          <label>Site Title:</label>
+          <label class="label_so_001_sied">Site Title:</label>
           <input type="text" class="textbox_001_sied" v-model="settings.siteTitle" />
         </div>
         <div>
-          <label>Enable Notifications:</label>
+          <label class="checkbox_label_sied">Enable Notifications:</label>
           <input type="checkbox" class="checkbox_sied" v-model="settings.notifications" />
         </div>
         <input type="submit" class="btn_sied" value="Save" />

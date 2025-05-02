@@ -466,15 +466,19 @@ nav.sidebar a.router-link-active {
 
 @media (min-width: 769px) {
   .sidebar {
-    position: relative;
-    left: 0 !important;
-    height: auto;
+    position: fixed;
+    top: 0;
+    left: -250px;
+    width: 250px;
+    height: 100vh;
+    transition: left 0.3s ease;
+    z-index: 999;
   }
   .sidebar.open {
     left: 0;
   }
   .sidebar-toggle {
-    display: none;
+    display: block;
   }
   #app {
     display: flex;
@@ -483,5 +487,10 @@ nav.sidebar a.router-link-active {
   main.content {
     margin-top: 0;
     margin-left: 0;
+    transition: margin-left 0.3s ease;
+  }
+  /* when sidebar is open, shift main content */
+  nav.sidebar.open + main.content {
+    margin-left: 250px;
   }
 } 
