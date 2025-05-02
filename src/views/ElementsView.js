@@ -3,7 +3,6 @@ import CardGrid from '../components/CardGrid.js';
 // Import UI components manually for preview
 import Sidebar from '../components/Sidebar.js';
 import Header from '../components/Header.js';
-import MainContent from '../components/MainContent.js';
 import Breadcrumbs from '../components/Breadcrumbs.js';
 import NavButton from '../components/NavButton.js';
 import StockLookup from '../components/widgets/StockLookup.js';
@@ -18,7 +17,6 @@ const components = {
   CardGrid,
   Sidebar,
   Header,
-  MainContent,
   Breadcrumbs,
   NavButton,
   StockLookup,
@@ -33,6 +31,20 @@ const componentList = Object.keys(components).map(name => ({ name }));
 export default {
   name: 'ElementsView',
   components,
+  created() {
+    console.log('[ElementsView] available components:', componentList);
+  },
+  watch: {
+    filter(newVal) {
+      console.log('[ElementsView] filter changed to:', newVal);
+    }
+  },
+  beforeMount() {
+    console.log('[ElementsView] beforeMount - components available:', this.$options.components);
+  },
+  mounted() {
+    console.log('[ElementsView] mounted - full list:', this.list);
+  },
   data() {
     return {
       filter: '',
@@ -45,12 +57,17 @@ export default {
       return this.list.filter(item => item.name.toLowerCase().includes(term));
     }
   },
+  methods: {
+    logItem(item) {
+      console.log('[ElementsView] previewing component:', item.name);
+    }
+  },
   template: `
     <div class="elements-view">
       <h1>Elements</h1>
       <input v-model="filter" placeholder="Search components..." />
       <CardGrid>
-        <div v-for="item in filteredList" :key="item.name" class="component-card">
+        <div v-for="item in filteredList" :key="item.name" class="component-card" @mouseenter="logItem(item)">
           <h3>{{ item.name }}</h3>
           <div class="preview">
             <component :is="item.name" />
