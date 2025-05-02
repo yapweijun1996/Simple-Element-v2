@@ -1,7 +1,7 @@
 export default {
   name: 'StockLookup',
   props: {
-    stockData: { type: Object, required: true }
+    stockData: { type: Object, default: () => ({}) }
   },
   data() {
     return {
@@ -10,10 +10,12 @@ export default {
   },
   computed: {
     desc() {
-      return this.stockData[this.selected]?.desc || '';
+      const entry = this.stockData?.[this.selected] || null;
+      return entry ? entry.desc : '';
     },
     symbol() {
-      return this.stockData[this.selected]?.unique || '';
+      const entry = this.stockData?.[this.selected] || null;
+      return entry ? entry.unique : '';
     }
   },
   template: `
