@@ -69,13 +69,15 @@
   /* Select Option [start] */
   .label_so_001_sied{  color: var(--text-color-000);  font-size: var(--font-size-000);  font-weight: 600;  font-family: var(--font-family-000);}  .select_so_001_sied{  background-color: var(--backg-color-000);  color:var(--text-color-000);  font-size:var(--font-size-000);  font-family:var(--font-family-000);  border: 2px solid var(--border-color-000);  padding: 6px 6px;  font-weight: 600;}  /* Select Option [end] */
   /* Form Input Type Text with Data Selection [start] */
-  .datalist_sied_001 {  position: absolute;  max-height: 200px;  border: 2px solid black;  overflow-x: hidden;  overflow-y: auto;  box-sizing: border-box;}  .datalist_sied_001 option {  font-size: 15px;  padding: 5px 5px;  background-color: #fff;  cursor: pointer;}  .datalist_sied_001 option:hover, .datalist_sied_001 option:focus {  color: #fff;  background-color: #000;  outline: 0;}  /* Form Input Type Text with Data Selection [end] */
+  /* Form Input Type Text with Data Selection [end] */
 
   /* Layout overrides */
   body, html { margin: 0; padding: 0; font-family: var(--font-family-000); font-size: var(--font-size); background: var(--backg-color-000-hover); height: 100%; }
   .admin-container { display: flex; height: 100vh; }
   .sidebar { width: 240px; background: var(--main-color); color: var(--backg-color); display: flex; flex-direction: column; padding: 20px; box-sizing: border-box; }
   .sidebar .nav-btn { margin-bottom: 12px; width: 100%; text-align: left; background: var(--backg-color-000-hover); border-color: var(--backg-color); }
+  .sidebar .nav-btn { color: var(--backg-color); }
+  .sidebar .nav-btn.active { background: var(--backg-color); color: var(--main-color); }
   .sidebar .nav-btn:hover { background: var(--backg-color); color: var(--main-color); }
   .header { height: 60px; background: var(--main-color); color: var(--backg-color); display: flex; align-items: center; padding: 0 20px; box-sizing: border-box; justify-content: space-between; }
   .main-content { flex: 1; overflow-y: auto; background: var(--backg-color); padding: 20px; box-sizing: border-box; }
@@ -91,10 +93,10 @@
   <div id="app" class="admin-container">
     <!-- Sidebar -->
     <aside class="sidebar">
-      <button class="btn_sied nav-btn" @click="currentView = 'Dashboard'">Dashboard</button>
-      <button class="btn_sied nav-btn" @click="currentView = 'Users'">Users</button>
-      <button class="btn_sied nav-btn" @click="currentView = 'Settings'">Settings</button>
-      <button class="btn_sied nav-btn" @click="currentView = 'Reports'">Reports</button>
+      <button class="btn_sied nav-btn" :class="{active: currentView === 'Dashboard'}" @click="currentView = 'Dashboard'">Dashboard</button>
+      <button class="btn_sied nav-btn" :class="{active: currentView === 'Users'}" @click="currentView = 'Users'">Users</button>
+      <button class="btn_sied nav-btn" :class="{active: currentView === 'Settings'}" @click="currentView = 'Settings'">Settings</button>
+      <button class="btn_sied nav-btn" :class="{active: currentView === 'Reports'}" @click="currentView = 'Reports'">Reports</button>
     </aside>
 
     <!-- Main area -->
