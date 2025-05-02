@@ -16,6 +16,8 @@ export default {
           :active-users="activeUsers"
           :sales-today="salesToday"
           :server-load="serverLoad"
+          :users="users"
+          :settings="settings"
         />
       </div>
     </div>
@@ -32,6 +34,14 @@ export default {
         MSFT: { desc: 'Microsoft Corporation - Technology', unique: 'NASDAQ: MSFT' },
         AMZN: { desc: 'Amazon.com, Inc. - Consumer Goods', unique: 'NASDAQ: AMZN' },
         FB: { desc: 'Meta Platforms Inc. - Communication Services', unique: 'NASDAQ: FB' }
+      },
+      users: [
+        { id: '001', name: 'Alice', email: 'alice@example.com', status: 'Active' },
+        { id: '002', name: 'Bob', email: 'bob@example.com', status: 'Inactive' }
+      ],
+      settings: {
+        language: 'en',
+        theme: 'light'
       }
     };
   },
