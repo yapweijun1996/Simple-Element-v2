@@ -2,7 +2,9 @@
 const Dashboard = {
   template: `
     <div>
-      <div class="header"><h1>Dashboard</h1></div>
+      <div class="element-section page-header">
+        <h1 class="element-title">Dashboard</h1>
+      </div>
 
       <div class="element-section">
         <h2 class="element-title">Welcome</h2>
@@ -26,7 +28,9 @@ const Dashboard = {
 const Users = {
   template: `
     <div>
-      <div class="header"><h1>Users</h1></div>
+      <div class="element-section page-header">
+        <h1 class="element-title">Users</h1>
+      </div>
       <table class="table">
         <thead>
           <tr><th>ID</th><th>Name</th><th>Email</th><th>Actions</th></tr>
@@ -66,7 +70,9 @@ const Users = {
 const Settings = {
   template: `
     <div>
-      <div class="header"><h1>Settings</h1></div>
+      <div class="element-section page-header">
+        <h1 class="element-title">Settings</h1>
+      </div>
       <form @submit.prevent="saveSettings">
         <div>
           <label>Site Title:</label>
@@ -98,7 +104,9 @@ const Settings = {
 const Elements = {
   template: `
     <div>
-      <div class="header"><h1>UI Elements</h1></div>
+      <div class="element-section page-header">
+        <h1 class="element-title">UI Elements</h1>
+      </div>
       <p>This page demonstrates the available UI components and how to use them.</p>
       
       <!-- Button Elements -->
@@ -390,9 +398,18 @@ const router = VueRouter.createRouter({
   routes
 });
 
-const app = Vue.createApp({
+const App = {
+  data() {
+    return { sidebarOpen: false };
+  },
+  methods: {
+    toggleSidebar() {
+      this.sidebarOpen = !this.sidebarOpen;
+    }
+  },
   template: `
-    <nav class="sidebar">
+    <button class="sidebar-toggle" @click="toggleSidebar">☰</button>
+    <nav :class="['sidebar', { open: sidebarOpen }]">
       <ul>
         <li><router-link to="/">Dashboard</router-link></li>
         <li><router-link to="/users">Users</router-link></li>
@@ -404,7 +421,8 @@ const app = Vue.createApp({
       <router-view></router-view>
     </main>
   `
-});
+};
 
+const app = Vue.createApp(App);
 app.use(router);
 app.mount('#app'); 
