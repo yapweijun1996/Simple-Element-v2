@@ -1,9 +1,12 @@
 export default {
   name: 'InfoCard',
   props: {
-    title: { type: String, required: true },
-    value: { type: [String, Number], required: true },
-    buttonText: { type: String, required: true }
+    title: { type: String, default: '' },
+    value: { type: [String, Number], default: '' },
+    buttonText: { type: String, default: '' }
+  },
+  created() {
+    console.log('[InfoCard] props:', { title: this.title, value: this.value, buttonText: this.buttonText });
   },
   emits: ['action'],
   template: `
@@ -13,4 +16,4 @@ export default {
       <button class="btn_sied" @click="$emit('action')">{{ buttonText }}</button>
     </div>
   `
-}; 
+};

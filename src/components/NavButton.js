@@ -1,9 +1,9 @@
 export default {
   name: 'NavButton',
   props: {
-    label: { type: String, required: true },
-    value: { type: String, required: true },
-    modelValue: { type: String, required: true }
+    label: { type: String, default: '' },
+    value: { type: String, default: '' },
+    modelValue: { type: String, default: '' }
   },
   emits: ['update:modelValue'],
   template: `
