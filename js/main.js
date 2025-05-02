@@ -41,8 +41,8 @@ const Users = {
             <td>{{ user.name }}</td>
             <td>{{ user.email }}</td>
             <td>
-              <button class="button" @click="editUser(user)">Edit</button>
-              <button class="button" @click="deleteUser(user.id)">Delete</button>
+              <input type="button" class="btn_sied" value="Edit" @click="editUser(user)" />
+              <input type="button" class="btn_sied" value="Delete" @click="deleteUser(user.id)" />
             </td>
           </tr>
         </tbody>
@@ -76,13 +76,13 @@ const Settings = {
       <form @submit.prevent="saveSettings">
         <div>
           <label>Site Title:</label>
-          <input type="text" v-model="settings.siteTitle" />
+          <input type="text" class="textbox_001_sied" v-model="settings.siteTitle" />
         </div>
         <div>
           <label>Enable Notifications:</label>
-          <input type="checkbox" v-model="settings.notifications" />
+          <input type="checkbox" class="checkbox_sied" v-model="settings.notifications" />
         </div>
-        <button class="button" type="submit">Save</button>
+        <input type="submit" class="btn_sied" value="Save" />
       </form>
     </div>
   `,
