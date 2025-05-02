@@ -104,18 +104,24 @@ const Elements = {
       <div class="element-section">
         <h2 class="element-title">Radio Buttons</h2>
         <div class="element-demo">
-          <h3>Standard Radio</h3>
-          <input id="html-demo" name="code_language_demo" value="HTML" type="radio" class="radio_sied">
-          <label for="html-demo" class="radio_label_sied">HTML</label>
-          <br>
-          <input id="css-demo" name="code_language_demo" value="CSS" type="radio" class="radio_sied">
-          <label for="css-demo" class="radio_label_sied">CSS</label>
-          <br>
-          <input id="js-demo" name="code_language_demo" value="JavaScript" type="radio" class="radio_sied">
-          <label for="js-demo" class="radio_label_sied">JavaScript</label>
+          <fieldset class="radio_fieldset_sied" role="radiogroup" aria-labelledby="standard-radio-legend">
+            <legend id="standard-radio-legend">Standard Radio</legend>
+            <div>
+              <input id="html-demo" name="code_language_demo" value="HTML" type="radio" class="radio_sied">
+              <label for="html-demo" class="radio_label_sied">HTML</label>
+            </div>
+            <div>
+              <input id="css-demo" name="code_language_demo" value="CSS" type="radio" class="radio_sied">
+              <label for="css-demo" class="radio_label_sied">CSS</label>
+            </div>
+            <div>
+              <input id="js-demo" name="code_language_demo" value="JavaScript" type="radio" class="radio_sied">
+              <label for="js-demo" class="radio_label_sied">JavaScript</label>
+            </div>
+          </fieldset>
           
           <h3 style="margin-top:15px;">Toolbar Radio</h3>
-          <div class="radio_toolbar_sied">
+          <div class="radio_toolbar_sied" role="radiogroup" aria-label="Toolbar Radio">
             <div class="radio_toolbar_item_sied">
               <input id="type001-demo" name="radio_toolbar_demo" value="type001" type="radio" checked>
               <label for="type001-demo">Type 001</label>
@@ -196,29 +202,29 @@ const Elements = {
         <h2 class="element-title">Text Inputs</h2>
         <div class="element-demo">
           <h3>Style 1</h3>
-          <input name="username1" placeholder="Default" type="textbox" class="textbox_001_sied">
-          <input name="username2" placeholder="Error" type="textbox" class="textbox_001_sied error">
-          <input name="username3" placeholder="Warning" type="textbox" class="textbox_001_sied warning">
-          <input name="username4" placeholder="Success" type="textbox" class="textbox_001_sied success">
+          <input name="username1" placeholder="Default" type="text" class="textbox_001_sied">
+          <input name="username2" placeholder="Error" type="text" class="textbox_001_sied error">
+          <input name="username3" placeholder="Warning" type="text" class="textbox_001_sied warning">
+          <input name="username4" placeholder="Success" type="text" class="textbox_001_sied success">
           
           <h3 style="margin-top:15px;">Style 2</h3>
-          <input name="username5" placeholder="Default" type="textbox" class="textbox_002_sied">
-          <input name="username6" placeholder="Error" type="textbox" class="textbox_002_sied error">
-          <input name="username7" placeholder="Warning" type="textbox" class="textbox_002_sied warning">
-          <input name="username8" placeholder="Success" type="textbox" class="textbox_002_sied success">
+          <input name="username5" placeholder="Default" type="text" class="textbox_002_sied">
+          <input name="username6" placeholder="Error" type="text" class="textbox_002_sied error">
+          <input name="username7" placeholder="Warning" type="text" class="textbox_002_sied warning">
+          <input name="username8" placeholder="Success" type="text" class="textbox_002_sied success">
         </div>
         <div class="code-block">
           <pre>&lt;!-- Style 1 --&gt;
-&lt;input name="username" placeholder="Default" type="textbox" class="textbox_001_sied"&gt;
-&lt;input name="username" placeholder="Error" type="textbox" class="textbox_001_sied error"&gt;
-&lt;input name="username" placeholder="Warning" type="textbox" class="textbox_001_sied warning"&gt;
-&lt;input name="username" placeholder="Success" type="textbox" class="textbox_001_sied success"&gt;
+&lt;input name="username" placeholder="Default" type="text" class="textbox_001_sied"&gt;
+&lt;input name="username" placeholder="Error" type="text" class="textbox_001_sied error"&gt;
+&lt;input name="username" placeholder="Warning" type="text" class="textbox_001_sied warning"&gt;
+&lt;input name="username" placeholder="Success" type="text" class="textbox_001_sied success"&gt;
 
 &lt;!-- Style 2 --&gt;
-&lt;input name="username" placeholder="Default" type="textbox" class="textbox_002_sied"&gt;
-&lt;input name="username" placeholder="Error" type="textbox" class="textbox_002_sied error"&gt;
-&lt;input name="username" placeholder="Warning" type="textbox" class="textbox_002_sied warning"&gt;
-&lt;input name="username" placeholder="Success" type="textbox" class="textbox_002_sied success"&gt;</pre>
+&lt;input name="username" placeholder="Default" type="text" class="textbox_002_sied"&gt;
+&lt;input name="username" placeholder="Error" type="text" class="textbox_002_sied error"&gt;
+&lt;input name="username" placeholder="Warning" type="text" class="textbox_002_sied warning"&gt;
+&lt;input name="username" placeholder="Success" type="text" class="textbox_002_sied success"&gt;</pre>
         </div>
         <div class="element-usage">
           Use <code>textbox_001_sied</code> or <code>textbox_002_sied</code> classes for styled inputs. Add status classes <code>error</code>, <code>warning</code>, or <code>success</code> as needed.
