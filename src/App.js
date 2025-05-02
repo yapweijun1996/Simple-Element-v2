@@ -1,10 +1,9 @@
 import Sidebar from './components/Sidebar.js';
 import Header from './components/Header.js';
 import MainContent from './components/MainContent.js';
-import DashboardView from './views/DashboardView.js';
 
 export default {
-  components: { Sidebar, Header, MainContent, DashboardView },
+  components: { Sidebar, Header, MainContent },
   template: `
     <div class="admin-container">
       <Sidebar v-model="currentView" />
