@@ -3,7 +3,22 @@ const Dashboard = {
   template: `
     <div>
       <div class="header"><h1>Dashboard</h1></div>
-      <p>Welcome to the admin dashboard.</p>
+
+      <div class="element-section">
+        <h2 class="element-title">Welcome</h2>
+        <div class="element-demo">
+          <p>Welcome to the admin dashboard.</p>
+        </div>
+      </div>
+
+      <div class="element-section">
+        <h2 class="element-title">Quick Actions</h2>
+        <div class="element-demo">
+          <input type="button" value="Add User" class="btn_sied" @click="$router.push('/users')" />
+          <input type="button" value="View Users" class="btn_sied" @click="$router.push('/users')" />
+          <input type="button" value="Settings" class="btn_sied" @click="$router.push('/settings')" />
+        </div>
+      </div>
     </div>
   `
 };
