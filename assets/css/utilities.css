@@ -1,0 +1,100 @@
+/* initialization [start] */
+:root{
+  --backg-color:white;
+  --backg-color-hover:black;
+  --main-color:black;
+  --main-color-hover:white;
+  --main-color-error:#EB1600;
+  --main-color-warning:#FFF700;
+  --main-color-success:#14D114;
+  --font-size:16px;
+
+  --border-color-000:var(--main-color);
+  --border-color-000-hover:var(--main-color-hover);
+  --border-color-error-000:var(--main-color-error);
+  --border-color-warning-000:var(--main-color-warning);
+  --border-color-success-000:var(--main-color-success);
+  --backg-color-000:var(--backg-color);
+  --backg-color-000-hover:var(--backg-color-hover);
+  --text-color-000:var(--main-color);
+  --text-color-000-hover:var(--main-color-hover);
+  --font-size-000:calc(var(--font-size) + 0px);
+  --font-size-p-001:calc(var(--font-size) + 1px);
+  --font-size-p-002:calc(var(--font-size) + 2px);
+  --font-size-p-003:calc(var(--font-size) + 3px);
+  --font-size-p-004:calc(var(--font-size) + 4px);
+  --font-size-p-005:calc(var(--font-size) + 5px);
+  --font-size-p-006:calc(var(--font-size) + 6px);
+  --font-size-p-007:calc(var(--font-size) + 7px);
+  --font-size-p-008:calc(var(--font-size) + 8px);
+  --font-size-p-009:calc(var(--font-size) + 9px);
+  --font-size-p-010:calc(var(--font-size) + 10px);
+  --font-size-m-001:calc(var(--font-size) - 1px);
+  --font-size-m-002:calc(var(--font-size) - 2px);
+  --font-size-m-003:calc(var(--font-size) - 3px);
+  --font-size-m-004:calc(var(--font-size) - 4px);
+  --font-size-m-005:calc(var(--font-size) - 5px);
+  --font-size-m-006:calc(var(--font-size) - 6px);
+  --font-size-m-007:calc(var(--font-size) - 7px);
+  --font-size-m-008:calc(var(--font-size) - 8px);
+  --font-size-m-009:calc(var(--font-size) - 9px);
+  --font-size-m-010:calc(var(--font-size) - 10px);
+  --font-family-000:"Arial", Helvetica, sans-serif;
+  --font-family-001:"Times New Roman", Times, serif;
+  --font-family-002:"Lucida Console", "Courier New", monospace;
+}
+
+/* Font Size */
+.font_sied_000{font-family:var(--font-family-000);color:var(--text-color-000);font-size:var(--font-size-000);}
+.font_sied_p_001{font-family:var(--font-family-000);color:var(--text-color-000);font-size:var(--font-size-p-001);}
+/* ... other font-size classes ... */
+
+/* Button */
+.btn_sied{
+  color:var(--text-color-000);
+  font-size:var(--font-size-000);
+  font-family:var(--font-family-000);
+  background: var(--backg-color-000);
+  border:2px solid var(--main-color);
+  font-weight:600;
+  padding:6px 12px;
+}
+.btn_sied:hover{
+  color:var(--text-color-000-hover);
+  background: var(--backg-color-000-hover);
+  cursor:pointer;
+}
+
+/* Radio */
+.radio_label_sied{color:var(--text-color-000);font-size:var(--font-size-000);font-weight:600;font-family:var(--font-family-000);}
+.radio_label_sied:hover{cursor:pointer;accent-color: var(--main-color);}
+.radio_sied:checked {accent-color: var(--main-color);}
+.radio_toolbar_sied input[type="radio"] {display: none;}
+.radio_toolbar_item_sied{display:inline-block;padding:5px 0;}
+.radio_toolbar_sied label{background-color:var(--backg-color-000);color:var(--text-color-000);padding:6px 12px;border:2px solid var(--border-color-000);font-weight:600;cursor:pointer;}
+.radio_toolbar_sied input[type="radio"]:checked+label{background-color:var(--backg-color-000-hover);color:var(--text-color-000-hover);}
+
+/* Checkbox */
+.checkbox_label_sied{color:var(--text-color-000);font-size:var(--font-size-000);font-weight:600;font-family:var(--font-family-000);}
+.checkbox_label_sied:hover{cursor:pointer;accent-color: var(--main-color);}
+.checkbox_sied:checked{accent-color: var(--main-color);}
+.checkbox_toolbar_sied input[type="checkbox"]{display:none;}
+.checkbox_toolbar_item_sied{display:inline-block;padding:5px 0;}
+.checkbox_toolbar_sied label{background-color:var(--backg-color-000);color:var(--text-color-000);padding:6px 12px;border:2px solid var(--border-color-000);font-weight:600;cursor:pointer;}
+.checkbox_toolbar_sied input[type="checkbox"]:checked+label{background-color:var(--backg-color-000-hover);color:var(--text-color-000-hover);}
+
+/* Textbox */
+.textbox_001_sied{background:var(--backg-color-000);color:var(--text-color-000);padding:6px;border:2px solid var(--border-color-000);margin:5px 0;}
+.textbox_001_sied:focus{border:3px solid var(--border-color-000);outline:none;}
+/* ...error, warning, success variants... */
+
+/* Textarea */
+.textarea_001_sied{background:var(--backg-color-000);color:var(--text-color-000);border:2px solid var(--border-color-000);padding:8px;box-sizing:border-box;}
+
+/* Select */
+.label_so_001_sied{color:var(--text-color-000);font-size:var(--font-size-000);font-weight:600;}
+.select_so_001_sied{background:var(--backg-color-000);color:var(--text-color-000);border:2px solid var(--border-color-000);padding:6px;font-weight:600;}
+
+/* Datalist wrapper - use native styling only */
+
+/* Common utilities continued... */ 
