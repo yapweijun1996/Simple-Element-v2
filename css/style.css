@@ -98,6 +98,7 @@ main.content { flex-grow: 1; background: #f1f2f6; padding: 20px; overflow-y: aut
   border:2px solid var(--main-color);
   font-weight:600;
   padding:6px 12px;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
 }
 .btn_sied:hover{
   color:var(--text-color-000-hover);
@@ -140,6 +141,7 @@ main.content { flex-grow: 1; background: #f1f2f6; padding: 20px; overflow-y: aut
   font-weight:600;
   border:2px solid var(--border-color-000);
   display:inline-block;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
 }
 
 .radio_toolbar_sied input[type="radio"]:checked+label {
@@ -181,6 +183,7 @@ main.content { flex-grow: 1; background: #f1f2f6; padding: 20px; overflow-y: aut
   font-weight:600;
   border:2px solid var(--border-color-000);
   display:inline-block;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
 }
 
 .checkbox_toolbar_sied input[type="checkbox"]:checked+label {
@@ -389,4 +392,21 @@ main.content { flex-grow: 1; background: #f1f2f6; padding: 20px; overflow-y: aut
   padding: 10px;
   background: #e3f2fd;
   border-left: 4px solid #2196f3;
+}
+
+/* Accessibility: focus-visible outlines */
+.btn_sied:focus-visible,
+.radio_sied:focus-visible + .radio_label_sied,
+.checkbox_sied:focus-visible + .checkbox_label_sied,
+.select_so_001_sied:focus-visible,
+.textbox_001_sied:focus-visible,
+.textarea_001_sied:focus-visible {
+  outline: 2px solid var(--main-color);
+  outline-offset: 2px;
+}
+
+/* Active navigation link */
+nav.sidebar a.router-link-active {
+  font-weight: bold;
+  color: var(--main-color);
 } 

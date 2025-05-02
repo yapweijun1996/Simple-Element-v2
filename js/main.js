@@ -159,15 +159,20 @@ const Elements = {
       <div class="element-section">
         <h2 class="element-title">Checkboxes</h2>
         <div class="element-demo">
-          <h3>Standard Checkbox</h3>
-          <input id="english-demo" name="display_language_demo" value="english" type="checkbox" class="checkbox_sied">
-          <label for="english-demo" class="checkbox_label_sied">English</label>
-          <br>
-          <input id="malay-demo" name="display_language_demo" value="malay" type="checkbox" class="checkbox_sied">
-          <label for="malay-demo" class="checkbox_label_sied">Malay</label>
+          <fieldset class="checkbox_fieldset_sied" role="group" aria-labelledby="standard-checkbox-legend">
+            <legend id="standard-checkbox-legend">Standard Checkbox</legend>
+            <div>
+              <input id="english-demo" name="display_language_demo" value="english" type="checkbox" class="checkbox_sied">
+              <label for="english-demo" class="checkbox_label_sied">English</label>
+            </div>
+            <div>
+              <input id="malay-demo" name="display_language_demo" value="malay" type="checkbox" class="checkbox_sied">
+              <label for="malay-demo" class="checkbox_label_sied">Malay</label>
+            </div>
+          </fieldset>
           
           <h3 style="margin-top:15px;">Toolbar Checkbox</h3>
-          <div class="checkbox_toolbar_sied">
+          <div class="checkbox_toolbar_sied" role="group" aria-label="Toolbar Checkbox">
             <div class="checkbox_toolbar_item_sied">
               <input id="langtype001-demo" name="checkbox_toolbar_demo" value="langtype001" type="checkbox">
               <label for="langtype001-demo">Language Type 001</label>
@@ -295,20 +300,29 @@ const Elements = {
       <div class="element-section">
         <h2 class="element-title">Datalist Input</h2>
         <div class="element-demo">
-          <input list="element-datalist" class="textbox_001_sied" type="text" placeholder="Type or select a stock code" id="element-datalist-input" autocomplete="off"/>
+          <input list="element-datalist" class="textbox_001_sied" type="text" placeholder="Type or select a stock code" id="element-datalist-input" autocomplete="off"
+            oninput="updateStockDetails(this, document.getElementById('desc-demo'), document.getElementById('unique-demo'))" />
           <datalist id="element-datalist">
             <option value="AAPL">Apple Inc. - Technology</option>
             <option value="GOOGL">Alphabet Inc. - Technology</option>
             <option value="MSFT">Microsoft Corporation - Technology</option>
           </datalist>
+          <div style="margin-top:10px;">
+            <input id="desc-demo" type="text" placeholder="Description" class="textbox_001_sied" readonly />
+            <input id="unique-demo" type="text" placeholder="Unique Code" class="textbox_001_sied" readonly />
+          </div>
         </div>
         <div class="code-block">
-          <pre>&lt;input list="datalist_id" class="textbox_001_sied" type="text" placeholder="Type or select..." id="input_id" autocomplete="off"/&gt;
+          <pre>&lt;input list="datalist_id" class="textbox_001_sied" type="text" placeholder="Type or select..." id="input_id" autocomplete="off" oninput="updateStockDetails(this, document.getElementById('desc_id'), document.getElementById('unique_id'))"/&gt;
 &lt;datalist id="datalist_id"&gt;
   &lt;option value="AAPL"&gt;Apple Inc. - Technology&lt;/option&gt;
   &lt;option value="GOOGL"&gt;Alphabet Inc. - Technology&lt;/option&gt;
   &lt;option value="MSFT"&gt;Microsoft Corporation - Technology&lt;/option&gt;
-&lt;/datalist&gt;</pre>
+&lt;/datalist&gt;
+&lt;div&gt;
+  &lt;input id="desc_id" type="text" placeholder="Description" class="textbox_001_sied" readonly/&gt;
+  &lt;input id="unique_id" type="text" placeholder="Unique Code" class="textbox_001_sied" readonly/&gt;
+&lt;/div&gt;</pre>
         </div>
         <div class="element-usage">
           Combine <code>textbox_001_sied</code> with HTML5 datalist for searchable dropdown selections.
