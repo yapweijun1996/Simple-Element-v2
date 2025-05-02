@@ -409,4 +409,79 @@ main.content { flex-grow: 1; background: #f1f2f6; padding: 20px; overflow-y: aut
 nav.sidebar a.router-link-active {
   font-weight: bold;
   color: var(--main-color);
+}
+
+/* Page Header style */
+.page-header {
+  margin-bottom: 20px;
+  padding: 20px;
+  background: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.page-header .element-title {
+  margin: 0;
+  font-size: 24px;
+}
+
+/* Sidebar toggle button for mobile */
+.sidebar-toggle {
+  display: none;
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  font-size: 24px;
+  background: none;
+  border: none;
+  color: var(--text-color-000);
+  z-index: 1000;
+  cursor: pointer;
+}
+
+/* Responsive sidebar */
+@media (max-width: 768px) {
+  #app {
+    flex-direction: column;
+  }
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: -250px;
+    width: 250px;
+    height: 100vh;
+    transition: left 0.3s ease;
+    z-index: 999;
+  }
+  .sidebar.open {
+    left: 0;
+  }
+  .sidebar-toggle {
+    display: block;
+  }
+  main.content {
+    margin-top: 60px;
+    padding: 20px;
+  }
+}
+
+@media (min-width: 769px) {
+  .sidebar {
+    position: relative;
+    left: 0 !important;
+    height: auto;
+  }
+  .sidebar.open {
+    left: 0;
+  }
+  .sidebar-toggle {
+    display: none;
+  }
+  #app {
+    display: flex;
+    height: 100vh;
+  }
+  main.content {
+    margin-top: 0;
+    margin-left: 0;
+  }
 } 
