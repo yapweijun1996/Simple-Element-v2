@@ -3,10 +3,18 @@ export default {
   props: {
     stockData: { type: Object, default: () => ({}) }
   },
+  created() {
+    console.log('[StockLookup] props.stockData:', this.stockData);
+  },
   data() {
     return {
       selected: ''
     };
+  },
+  watch: {
+    selected(newVal) {
+      console.log('[StockLookup] selected changed to:', newVal);
+    }
   },
   computed: {
     desc() {
