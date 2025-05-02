@@ -479,8 +479,8 @@ nav.sidebar a.router-link-active {
   }
   .sidebar-toggle {
     display: block;
-    right: 15px;
-    left: auto;
+    left: 15px;
+    right: auto;
   }
   #app {
     display: flex;
