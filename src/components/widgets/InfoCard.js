@@ -2,7 +2,7 @@ export default {
   name: 'InfoCard',
   props: {
     title: { type: String, required: true },
-    value: { type: String, required: true },
+    value: { type: [String, Number], required: true },
     buttonText: { type: String, required: true }
   },
   emits: ['action'],
