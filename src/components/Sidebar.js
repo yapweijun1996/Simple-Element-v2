@@ -15,6 +15,7 @@ export default {
       <button class="btn_sied nav-btn" :class="{active: modelValue==='Users'}" @click="select('Users')">Users</button>
       <button class="btn_sied nav-btn" :class="{active: modelValue==='Settings'}" @click="select('Settings')">Settings</button>
       <button class="btn_sied nav-btn" :class="{active: modelValue==='Reports'}" @click="select('Reports')">Reports</button>
+      <button class="btn_sied nav-btn" :class="{active: modelValue==='Elements'}" @click="select('Elements')">Elements</button>
     </aside>
   `
 };

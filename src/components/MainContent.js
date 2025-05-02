@@ -2,6 +2,7 @@ import DashboardView from '../views/DashboardView.js';
 import UsersView from '../views/UsersView.js';
 import SettingsView from '../views/SettingsView.js';
 import ReportsView from '../views/ReportsView.js';
+import ElementsView from '../views/ElementsView.js';
 
 export default {
   name: 'MainContent',
@@ -14,7 +15,7 @@ export default {
     users: { type: Array, required: true },
     settings: { type: Object, required: true }
   },
-  components: { DashboardView, UsersView, SettingsView, ReportsView },
+  components: { DashboardView, UsersView, SettingsView, ReportsView, ElementsView },
   template: `
     <main class="main-content">
       <DashboardView
@@ -27,6 +28,7 @@ export default {
       <UsersView v-else-if="currentView === 'Users'" :users="users" />
       <SettingsView v-else-if="currentView === 'Settings'" :settings="settings" />
       <ReportsView v-else-if="currentView === 'Reports'" />
+      <ElementsView v-else-if="currentView === 'Elements'" />
     </main>
   `
 };
