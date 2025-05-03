@@ -451,25 +451,32 @@ nav.sidebar a.router-link-active {
   font-size: 24px;
 }
 
-/* Sidebar toggle button for mobile */
+/* Sidebar toggle button */
 .sidebar-toggle {
   display: none;
   position: fixed;
-  top: calc(60px + 15px);  /* Sit below the 60px topbar */
-  right: 15px;
   font-size: 24px;
   background: none;
   border: none;
   color: var(--text-color-000);
   z-index: 1002;  /* Above the topbar (1001) */
   cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 /* Responsive sidebar */
 @media (max-width: 768px) {
+  /* Mobile positioning - right side of topbar */
+  .sidebar-toggle {
+    display: block;
+    top: 18px; /* Center within the 60px topbar */
+    right: 20px;
+  }
+  
   #app {
     flex-direction: column;
   }
+  
   .sidebar {
     position: fixed;
     top: 60px;
@@ -481,9 +488,6 @@ nav.sidebar a.router-link-active {
   }
   .sidebar.open {
     left: 0;
-  }
-  .sidebar-toggle {
-    display: block;
   }
   main.content {
     margin-top: 0; /* Already handled by #app margin-top */
@@ -493,6 +497,18 @@ nav.sidebar a.router-link-active {
 }
 
 @media (min-width: 769px) {
+  /* Desktop positioning - left side of topbar */
+  .sidebar-toggle {
+    display: block;
+    top: 18px; /* Center within the 60px topbar */
+    left: 20px;
+  }
+  
+  /* Move the topbar title to make room for the toggle */
+  .topbar-title {
+    margin-left: 45px;
+  }
+  
   .sidebar {
     position: fixed;
     top: 60px;
@@ -504,11 +520,6 @@ nav.sidebar a.router-link-active {
   }
   .sidebar.open {
     left: 0;
-  }
-  .sidebar-toggle {
-    display: block;
-    left: 15px;
-    right: auto;
   }
   #app {
     display: flex;
