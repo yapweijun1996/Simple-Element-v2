@@ -513,9 +513,9 @@ nav.sidebar a.router-link-active {
   .sidebar {
     position: fixed;
     top: 60px;
-    left: -250px;
-    width: 250px;
-    height: calc(100vh - 60px); /* Adjust for topbar */
+    left: -100%;        /* Hide full-width off-screen */
+    width: 100%;        /* Cover full viewport width */
+    height: calc(100vh - 60px);
     transition: left 0.3s ease;
     z-index: 999;
   }
