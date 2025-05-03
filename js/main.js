@@ -509,7 +509,7 @@ const App = {
     }
   },
   template: `
-    <button class="sidebar-toggle" @click="toggleSidebar">☰</button>
+    <button class="sidebar-toggle" @click="toggleSidebar">{{ sidebarOpen ? '×' : '☰' }}</button>
     <nav :class="['sidebar', { open: sidebarOpen }]">
       <ul>
         <li><router-link to="/">Dashboard</router-link></li>
