@@ -16,7 +16,7 @@ const Dashboard = {
       <div class="element-section">
         <h2 class="element-title">Quick Actions</h2>
         <div class="element-demo">
-          <input type="button" value="Add User" class="btn_sied" @click="$router.push('/users')" />
+          <input type="button" value="Add User" class="btn_sied" @click="$router.push('/users/create')" />
           <input type="button" value="View Users" class="btn_sied" @click="$router.push('/users')" />
           <input type="button" value="Settings" class="btn_sied" @click="$router.push('/settings')" />
         </div>
@@ -51,18 +51,16 @@ const Users = {
   `,
   data() {
     return {
-      users: [
-        { id: 1, name: 'John Doe', email: 'john@example.com' },
-        { id: 2, name: 'Jane Smith', email: 'jane@example.com' }
-      ]
+      users: UserService.getUsers()
     }
   },
   methods: {
     editUser(user) {
-      alert('Edit ' + user.name);
+      this.$router.push(`/users/${user.id}/edit`);
     },
     deleteUser(id) {
-      this.users = this.users.filter(u => u.id !== id);
+      UserService.deleteUser(id);
+      this.users = UserService.getUsers();
     }
   }
 };
@@ -94,9 +92,14 @@ const Settings = {
       }
     }
   },
+  created() {
+    const saved = JSON.parse(localStorage.getItem('admin_settings'));
+    if (saved) this.settings = saved;
+  },
   methods: {
     saveSettings() {
-      alert('Settings Saved: ' + JSON.stringify(this.settings));
+      localStorage.setItem('admin_settings', JSON.stringify(this.settings));
+      alert('Settings saved');
     }
   }
 };
@@ -386,9 +389,107 @@ const Elements = {
   `
 };
 
+const UserService = {
+  key: 'admin_users',
+  getUsers() {
+    return JSON.parse(localStorage.getItem(this.key) || '[]');
+  },
+  saveUsers(users) {
+    localStorage.setItem(this.key, JSON.stringify(users));
+  },
+  getUser(id) {
+    return this.getUsers().find(u => u.id === id);
+  },
+  addUser(user) {
+    const users = this.getUsers();
+    users.push(user);
+    this.saveUsers(users);
+  },
+  updateUser(updated) {
+    const users = this.getUsers().map(u => u.id === updated.id ? updated : u);
+    this.saveUsers(users);
+  },
+  deleteUser(id) {
+    const users = this.getUsers().filter(u => u.id !== id);
+    this.saveUsers(users);
+  }
+};
+
+const CreateUser = {
+  template: `
+    <div>
+      <div class="element-section page-header">
+        <h1 class="element-title">Create User</h1>
+      </div>
+      <form @submit.prevent="createUser">
+        <div>
+          <label class="label_so_001_sied">Name:</label>
+          <input type="text" class="textbox_001_sied" v-model="user.name" required />
+        </div>
+        <div>
+          <label class="label_so_001_sied">Email:</label>
+          <input type="email" class="textbox_001_sied" v-model="user.email" required />
+        </div>
+        <input type="submit" class="btn_sied" value="Create" />
+      </form>
+    </div>
+  `,
+  data() {
+    return { user: { name: '', email: '' } };
+  },
+  methods: {
+    createUser() {
+      const users = UserService.getUsers();
+      const maxId = users.reduce((max, u) => u.id > max ? u.id : max, 0);
+      const newUser = { id: maxId + 1, name: this.user.name, email: this.user.email };
+      UserService.addUser(newUser);
+      this.$router.push('/users');
+    }
+  }
+};
+
+const EditUser = {
+  template: `
+    <div>
+      <div class="element-section page-header">
+        <h1 class="element-title">Edit User</h1>
+      </div>
+      <form @submit.prevent="updateUser">
+        <div>
+          <label class="label_so_001_sied">Name:</label>
+          <input type="text" class="textbox_001_sied" v-model="user.name" required />
+        </div>
+        <div>
+          <label class="label_so_001_sied">Email:</label>
+          <input type="email" class="textbox_001_sied" v-model="user.email" required />
+        </div>
+        <input type="submit" class="btn_sied" value="Save" />
+      </form>
+    </div>
+  `,
+  data() {
+    return { user: { id: null, name: '', email: '' } };
+  },
+  created() {
+    const id = parseInt(this.$route.params.id);
+    const existing = UserService.getUser(id);
+    if (existing) {
+      this.user = Object.assign({}, existing);
+    }
+  },
+  methods: {
+    updateUser() {
+      UserService.updateUser(this.user);
+      this.$router.push('/users');
+    }
+  }
+};
+
 const routes = [
   { path: '/', component: Dashboard },
   { path: '/users', component: Users },
+  { path: '/users/create', component: CreateUser },
+  { path: '/users/:id/edit', component: EditUser },
   { path: '/settings', component: Settings },
   { path: '/elements', component: Elements }
 ];
@@ -400,7 +501,7 @@ const router = VueRouter.createRouter({
 
 const App = {
   data() {
-    return { sidebarOpen: false };
+    return { sidebarOpen: window.innerWidth >= 769 };
   },
   methods: {
     toggleSidebar() {
