@@ -93,13 +93,22 @@ const Settings = {
     }
   },
   created() {
-    const saved = JSON.parse(localStorage.getItem('admin_settings'));
-    if (saved) this.settings = saved;
+    try {
+      const saved = JSON.parse(localStorage.getItem('admin_settings'));
+      if (saved) this.settings = saved;
+    } catch (error) {
+      console.error('Error loading settings:', error);
+    }
   },
   methods: {
     saveSettings() {
-      localStorage.setItem('admin_settings', JSON.stringify(this.settings));
-      alert('Settings saved');
+      try {
+        localStorage.setItem('admin_settings', JSON.stringify(this.settings));
+        alert('Settings saved');
+      } catch (error) {
+        console.error('Error saving settings:', error);
+        alert('Error saving settings: ' + error.message);
+      }
     }
   }
 };
@@ -392,26 +401,80 @@ const Elements = {
 const UserService = {
   key: 'admin_users',
   getUsers() {
-    return JSON.parse(localStorage.getItem(this.key) || '[]');
+    try {
+      return JSON.parse(localStorage.getItem(this.key) || '[]');
+    } catch (error) {
+      console.error('Error getting users from localStorage:', error);
+      return [];
+    }
   },
   saveUsers(users) {
-    localStorage.setItem(this.key, JSON.stringify(users));
+    try {
+      if (!Array.isArray(users)) {
+        console.error('Invalid users data - expected array');
+        return false;
+      }
+      localStorage.setItem(this.key, JSON.stringify(users));
+      return true;
+    } catch (error) {
+      console.error('Error saving users to localStorage:', error);
+      return false;
+    }
   },
   getUser(id) {
-    return this.getUsers().find(u => u.id === id);
+    try {
+      if (!id || isNaN(parseInt(id))) {
+        console.error('Invalid user id');
+        return null;
+      }
+      return this.getUsers().find(u => u.id === id);
+    } catch (error) {
+      console.error('Error getting user:', error);
+      return null;
+    }
   },
   addUser(user) {
-    const users = this.getUsers();
-    users.push(user);
-    this.saveUsers(users);
+    try {
+      if (!user || !user.name || !user.email) {
+        console.error('Invalid user data');
+        return false;
+      }
+      const users = this.getUsers();
+      users.push(user);
+      this.saveUsers(users);
+      return true;
+    } catch (error) {
+      console.error('Error adding user:', error);
+      return false;
+    }
   },
   updateUser(updated) {
-    const users = this.getUsers().map(u => u.id === updated.id ? updated : u);
-    this.saveUsers(users);
+    try {
+      if (!updated || !updated.id) {
+        console.error('Invalid user data for update');
+        return false;
+      }
+      const users = this.getUsers().map(u => u.id === updated.id ? updated : u);
+      this.saveUsers(users);
+      return true;
+    } catch (error) {
+      console.error('Error updating user:', error);
+      return false;
+    }
   },
   deleteUser(id) {
-    const users = this.getUsers().filter(u => u.id !== id);
-    this.saveUsers(users);
+    try {
+      if (!id || isNaN(parseInt(id))) {
+        console.error('Invalid user id for deletion');
+        return false;
+      }
+      const users = this.getUsers().filter(u => u.id !== id);
+      this.saveUsers(users);
+      return true;
+    } catch (error) {
+      console.error('Error deleting user:', error);
+      return false;
+    }
   }
 };
 
@@ -509,8 +572,8 @@ const App = {
     }
   },
   template: `
-    <button class="sidebar-toggle" @click="toggleSidebar">{{ sidebarOpen ? '×' : '☰' }}</button>
-    <nav :class="['sidebar', { open: sidebarOpen }]">
+    <button class="sidebar-toggle" @click="toggleSidebar" aria-label="Toggle navigation menu" aria-expanded="{{ sidebarOpen }}">{{ sidebarOpen ? '×' : '☰' }}</button>
+    <nav :class="['sidebar', { open: sidebarOpen }]" aria-label="Main navigation" role="navigation">
       <ul>
         <li><router-link to="/">Dashboard</router-link></li>
         <li><router-link to="/users">Users</router-link></li>
@@ -518,7 +581,7 @@ const App = {
         <li><router-link to="/elements">UI Elements</router-link></li>
       </ul>
     </nav>
-    <main class="content">
+    <main class="content" role="main">
       <router-view></router-view>
     </main>
   `

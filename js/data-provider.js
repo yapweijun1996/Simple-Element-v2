@@ -15,39 +15,55 @@ const stockData = {
 };
 
 function updateStockDetails(stockCodeInput, descElement, uniqueElement) {
-  const data = stockData[stockCodeInput.value];
-  if (data) {
-    descElement.value = data.desc;
-    uniqueElement.value = data.unique;
-  } else {
-    descElement.value = '';
-    uniqueElement.value = '';
+  try {
+    if (!stockCodeInput || !descElement || !uniqueElement) {
+      console.error('Missing required elements for updateStockDetails');
+      return;
+    }
+    const data = stockData[stockCodeInput.value];
+    if (data) {
+      descElement.value = data.desc;
+      uniqueElement.value = data.unique;
+    } else {
+      descElement.value = '';
+      uniqueElement.value = '';
+    }
+  } catch (error) {
+    console.error('Error updating stock details:', error);
   }
 }
 
 function populateDatalist(dataListId) {
-  const dataList = document.getElementById(dataListId);
-  if (!dataList) return;
-  
-  // Clear existing options
-  dataList.innerHTML = '';
-  
-  // Add options from stockData
-  Object.keys(stockData).forEach(function(code) {
-    const option = document.createElement('option');
-    option.value = code;
-    option.textContent = stockData[code].desc;
-    dataList.appendChild(option);
-  });
+  try {
+    const dataList = document.getElementById(dataListId);
+    if (!dataList) return;
+    
+    // Clear existing options
+    dataList.innerHTML = '';
+    
+    // Add options from stockData
+    Object.keys(stockData).forEach(function(code) {
+      const option = document.createElement('option');
+      option.value = code;
+      option.textContent = stockData[code].desc;
+      dataList.appendChild(option);
+    });
+  } catch (error) {
+    console.error('Error populating datalist:', error);
+  }
 }
 
 // Initialize datalists when page loads
 document.addEventListener('DOMContentLoaded', function() {
-  // Populate any datalists on the page
-  const datalists = document.querySelectorAll('datalist');
-  datalists.forEach(list => {
-    if (list.id) {
-      populateDatalist(list.id);
-    }
-  });
+  try {
+    // Populate any datalists on the page
+    const datalists = document.querySelectorAll('datalist');
+    datalists.forEach(list => {
+      if (list.id) {
+        populateDatalist(list.id);
+      }
+    });
+  } catch (error) {
+    console.error('Error initializing datalists:', error);
+  }
 }); 
