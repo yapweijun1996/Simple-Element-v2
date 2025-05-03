@@ -1,4 +1,5 @@
-/* Reset */
+/* *** RESET & BASE STYLES *** */
+/* Applies universal reset and base typography/layout settings. */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html, body { height: 100%; font-family: Arial, sans-serif; }
 
@@ -464,6 +465,38 @@ nav.sidebar a.router-link-active {
   transition: all 0.3s ease;
 }
 
+/* Hamburger Icon Lines */
+.sidebar-toggle .hamburger-line {
+  display: block;
+  width: 24px;
+  height: 3px;
+  margin: 4px auto;
+  background: var(--text-color-000);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Animate to X when sidebar is open */
+.sidebar-toggle[aria-expanded="true"] .hamburger-line:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.sidebar-toggle[aria-expanded="true"] .hamburger-line:nth-child(2) {
+  opacity: 0;
+}
+.sidebar-toggle[aria-expanded="true"] .hamburger-line:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Transparent overlay behind sidebar */
+.sidebar-open-overlay {
+  position: fixed;
+  top: 60px; /* below topbar */
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+}
+
 /* Responsive sidebar */
 @media (max-width: 768px) {
   /* Mobile positioning - right side of topbar */
@@ -549,4 +582,43 @@ nav.sidebar a:focus-visible {
   outline: 2px solid var(--main-color);
   outline-offset: 2px;
   background-color: rgba(255, 255, 255, 0.1);
-} 
+}
+
+/* ------------------------------------------------------------------- */
+/* NAVIGATION LAYOUT                                                    */
+/* Styles for topbar and sidebar navigation including responsiveness.   */
+ nav.sidebar { /* ... existing code ... */ }
+ nav.sidebar ul { /* ... existing code ... */ }
+/* ------------------------------------------------------------------- */
+/* PAGE STRUCTURE                                                       */
+/* Main content area and header sections layout styles.               */
+ header.topbar { /* ... existing code ... */ }
+ .topbar-title { /* ... existing code ... */ }
+ #app { /* ... existing code ... */ }
+/* ------------------------------------------------------------------- */
+/* TYPOGRAPHY UTILITIES                                                 */
+/* Helper classes for font sizes and families using CSS variables.     */
+ .font_sied_000{ /* ... existing code ... */ }
+/* ------------------------------------------------------------------- */
+/* COMPONENT STYLES                                                      */
+/* Button, input, radio, checkbox, and form element styling.           */
+ .btn_sied{ /* ... existing code ... */ }
+ .btn_sied:hover{ /* ... existing code ... */ }
+ .radio_label_sied{ /* ... existing code ... */ }
+ .radio_sied:checked{ /* ... existing code ... */ }
+ .checkbox_label_sied{ /* ... existing code ... */ }
+ .checkbox_sied:checked{ /* ... existing code ... */ }
+ .textbox_001_sied { /* ... existing code ... */ }
+ .textbox_001_sied.error { /* ... existing code ... */ }
+/* ------------------------------------------------------------------- */
+/* UI ELEMENT PREVIEWS                                                  */
+/* Styles for demo sections showcasing components and code blocks.      */
+ .element-section { /* ... existing code ... */ }
+ .element-demo { /* ... existing code ... */ }
+ .code-block { /* ... existing code ... */ }
+ .element-usage { /* ... existing code ... */ }
+/* ------------------------------------------------------------------- */
+/* RESPONSIVE BREAKPOINTS                                                */
+/* Media queries for adjusting layout on different screen sizes.       */
+ @media (max-width: 768px) { /* ... existing code ... */ }
+ @media (min-width: 769px) { /* ... existing code ... */ } 
