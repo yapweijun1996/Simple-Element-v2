@@ -572,7 +572,7 @@ const App = {
     }
   },
   template: `
-    <button class="sidebar-toggle" @click="toggleSidebar" aria-label="Toggle navigation menu" aria-expanded="{{ sidebarOpen }}">{{ sidebarOpen ? '×' : '☰' }}</button>
+    <button class="sidebar-toggle" @click="toggleSidebar" aria-label="Toggle navigation menu" :aria-expanded="sidebarOpen">{{ sidebarOpen ? '×' : '☰' }}</button>
     <nav :class="['sidebar', { open: sidebarOpen }]" aria-label="Main navigation" role="navigation">
       <ul>
         <li><router-link to="/">Dashboard</router-link></li>

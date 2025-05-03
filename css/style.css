@@ -3,7 +3,7 @@
 html, body { height: 100%; font-family: Arial, sans-serif; }
 
 /* Layout */
-.topbar {
+header.topbar {
   position: fixed;
   top: 0;
   left: 0;
@@ -525,4 +525,17 @@ nav.sidebar a.router-link-active {
     margin-left: 250px;
     width: calc(100% - 250px);
   }
+}
+
+/* Improved keyboard accessibility */
+.sidebar-toggle:focus-visible {
+  outline: 2px solid var(--main-color);
+  outline-offset: 2px;
+}
+
+/* Add styles for links in the sidebar for better accessibility */
+nav.sidebar a:focus-visible {
+  outline: 2px solid var(--main-color);
+  outline-offset: 2px;
+  background-color: rgba(255, 255, 255, 0.1);
 } 
