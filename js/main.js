@@ -569,6 +569,11 @@ const App = {
   methods: {
     toggleSidebar() {
       this.sidebarOpen = !this.sidebarOpen;
+    },
+    closeSidebar() {
+      if (window.innerWidth < 769) {
+        this.sidebarOpen = false;
+      }
     }
   },
   template: `
@@ -580,10 +585,10 @@ const App = {
     <div v-if="sidebarOpen" class="sidebar-open-overlay" @click="toggleSidebar"></div>
     <nav :class="['sidebar', { open: sidebarOpen }]" aria-label="Main navigation" role="navigation">
       <ul>
-        <li><router-link to="/">Dashboard</router-link></li>
-        <li><router-link to="/users">Users</router-link></li>
-        <li><router-link to="/settings">Settings</router-link></li>
-        <li><router-link to="/elements">UI Elements</router-link></li>
+        <li><router-link to="/" @click="closeSidebar">Dashboard</router-link></li>
+        <li><router-link to="/users" @click="closeSidebar">Users</router-link></li>
+        <li><router-link to="/settings" @click="closeSidebar">Settings</router-link></li>
+        <li><router-link to="/elements" @click="closeSidebar">UI Elements</router-link></li>
       </ul>
     </nav>
     <main class="content" role="main">
