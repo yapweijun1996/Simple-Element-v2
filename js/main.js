@@ -634,7 +634,20 @@ const ToastContainer = {
 
 const App = {
   data() {
-    return { sidebarOpen: window.innerWidth >= 769 };
+    // sidebarOpen: controls collapsed/expanded sidebar
+    // menuGroups: array of group titles and their menu items
+    // groupOpen: which dropdown groups are expanded
+    return {
+      sidebarOpen: window.innerWidth >= 769,
+      menuGroups: [
+        { title: 'Main', items: [ { name: 'Dashboard', path: '/' } ] },
+        { title: 'User Management', items: [ { name: 'View Users', path: '/users' }, { name: 'Create User', path: '/users/create' } ] },
+        { title: 'Configuration', items: [ { name: 'Settings', path: '/settings' } ] },
+        { title: 'Components', items: [ { name: 'UI Elements', path: '/elements' } ] }
+      ],
+      // initially collapse all groups
+      groupOpen: [false, false, false, false]
+    };
   },
   methods: {
     toggleSidebar() {
@@ -644,6 +657,10 @@ const App = {
       if (window.innerWidth < 769) {
         this.sidebarOpen = false;
       }
+    },
+    // Toggle a sidebar dropdown group by index
+    toggleGroup(idx) {
+      this.groupOpen.splice(idx, 1, !this.groupOpen[idx]);
     }
   },
   template: `
@@ -653,12 +670,17 @@ const App = {
       <span class="hamburger-line"></span>
     </button>
     <nav :class="['sidebar', { open: sidebarOpen }]" aria-label="Main navigation" role="navigation">
-      <ul>
-        <li><router-link to="/" @click="closeSidebar">Dashboard</router-link></li>
-        <li><router-link to="/users" @click="closeSidebar">Users</router-link></li>
-        <li><router-link to="/settings" @click="closeSidebar">Settings</router-link></li>
-        <li><router-link to="/elements" @click="closeSidebar">UI Elements</router-link></li>
-      </ul>
+      <!-- Grouped dropdown menu sections -->
+      <div v-for="(group, idx) in menuGroups" :key="group.title" class="sidebar-group">
+        <div class="sidebar-group-title" @click="toggleGroup(idx)">
+          {{ group.title }}
+        </div>
+        <ul v-show="groupOpen[idx]" class="sidebar-group-list">
+          <li v-for="item in group.items" :key="item.path">
+            <router-link :to="item.path" @click="closeSidebar">{{ item.name }}</router-link>
+          </li>
+        </ul>
+      </div>
     </nav>
     <main class="content" role="main">
       <Breadcrumbs></Breadcrumbs>

@@ -680,4 +680,53 @@ nav.sidebar a:focus-visible {
 .card-value {
   font-size: 28px;
   font-weight: bold;
+}
+
+/* Sidebar grouped dropdown menus */
+.sidebar-group {
+  margin-bottom: 15px;
+}
+.sidebar-group-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  font-weight: 600;
+  font-size: var(--font-size-000);
+  color: var(--text-color-000-hover);
+  background: var(--backg-color-000-hover);
+  border-radius: 4px;
+  cursor: pointer;
+  user-select: none;
+}
+.sidebar-group-title::after {
+  content: '▸';
+  transition: transform 0.2s ease;
+}
+.sidebar-group-title.open::after {
+  transform: rotate(90deg);
+}
+.sidebar-group-list {
+  list-style: none;
+  margin: 5px 0 0 0;
+  padding-left: 15px;
+}
+.sidebar-group-list li {
+  margin: 5px 0;
+}
+.sidebar-group-list li a {
+  color: var(--text-color-000);
+  text-decoration: none;
+  font-size: var(--font-size-000);
+  display: block;
+  padding: 5px 0;
+}
+.sidebar-group-list li a.router-link-active {
+  font-weight: bold;
+  color: var(--main-color);
+}
+
+/* Ensure sidebar scrolls if too long */
+nav.sidebar {
+  overflow-y: auto;
 } 
