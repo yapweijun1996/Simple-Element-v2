@@ -656,7 +656,7 @@ const ToastContainer = {
     return { toasts: [] };
   },
   template: `
-    <div id="toast-container" class="element-demo toast-container">
+    <div v-if="toasts.length" id="toast-container" class="element-demo toast-container">
       <div v-for="t in toasts" :key="t.id" class="toast" :class="t.type">{{ t.message }}</div>
     </div>
   `,
