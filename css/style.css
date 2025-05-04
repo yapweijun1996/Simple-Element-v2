@@ -486,17 +486,6 @@ nav.sidebar a.router-link-active {
   transform: translateY(-7px) rotate(-45deg);
 }
 
-/* Transparent overlay behind sidebar */
-.sidebar-open-overlay {
-  position: fixed;
-  top: 60px; /* below topbar */
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.4);
-  z-index: 998; /* lowered so sidebar sits above overlay */
-}
-
 /* Responsive sidebar */
 @media (max-width: 768px) {
   /* Mobile positioning - right side of topbar */
