@@ -5,6 +5,7 @@ const { defineAsyncComponent } = Vue;
 const LoadingComponent = { template: '<div class="element-demo">Loading...</div>' };
 // Error placeholder shown if loading fails, with retry button
 const ErrorComponent = { template: '<div class="element-usage">Failed to load. <button class="btn_sied" @click="$forceUpdate()">Retry</button></div>' };
+
 // Centralized confirmation dialog component
 const ConfirmationDialog = {
   data() { return { show: false, message: '', resolve: null }; },
@@ -711,6 +712,7 @@ const ToastContainer = {
 };
 
 const App = {
+  components: { ConfirmationDialog, Breadcrumbs, ToastContainer },
   data() {
     return {
       sidebarOpen: window.innerWidth >= 769,
