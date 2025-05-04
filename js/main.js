@@ -562,6 +562,51 @@ const router = VueRouter.createRouter({
   routes
 });
 
+// Global component for breadcrumb navigation
+const Breadcrumbs = {
+  template: `
+    <nav class="element-usage breadcrumb" aria-label="breadcrumb">
+      <ul class="breadcrumb-list">
+        <li v-for="(crumb, idx) in crumbs" :key="idx">
+          <router-link v-if="idx < crumbs.length - 1" :to="crumb.path">{{ crumb.name }}</router-link>
+          <span v-else>{{ crumb.name }}</span>
+        </li>
+      </ul>
+    </nav>
+  `,
+  computed: {
+    crumbs() {
+      // Map matched routes to breadcrumb items (fall back to path segment if no meta.title)
+      return this.$route.matched.map(r => ({
+        name: r.meta && r.meta.title ? r.meta.title : r.path.replace(/\//g, ''),
+        path: r.path
+      }));
+    }
+  }
+};
+
+// Global component for toast notifications
+const ToastContainer = {
+  data() {
+    return { toasts: [] };
+  },
+  template: `
+    <div id="toast-container" class="element-demo toast-container">
+      <div v-for="t in toasts" :key="t.id" class="toast" :class="t.type">{{ t.message }}</div>
+    </div>
+  `,
+  methods: {
+    addToast(message, type = 'info') {
+      const id = Date.now();
+      this.toasts.push({ id, message, type });
+      // Auto-dismiss after 3 seconds
+      setTimeout(() => {
+        this.toasts = this.toasts.filter(t => t.id !== id);
+      }, 3000);
+    }
+  }
+};
+
 const App = {
   data() {
     return { sidebarOpen: window.innerWidth >= 769 };
@@ -597,5 +642,10 @@ const App = {
 };
 
 const app = Vue.createApp(App);
+
+// Register global components to use anywhere in templates
+app.component('Breadcrumbs', Breadcrumbs);
+app.component('ToastContainer', ToastContainer);
+
 app.use(router);
 app.mount('#app'); 
