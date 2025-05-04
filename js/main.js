@@ -1,4 +1,6 @@
 // js/main.js
+const { defineAsyncComponent } = Vue;
+
 const Dashboard = {
   template: `
     <div>
@@ -56,7 +58,12 @@ const Users = {
       <div class="element-section page-header">
         <h1 class="element-title">Users</h1>
       </div>
-      <table class="table">
+      <!-- Show skeleton placeholders while loading -->
+      <div v-if="loading" class="element-demo">
+        <div class="skeleton skeleton-row" v-for="i in 5" :key="i"></div>
+      </div>
+      <!-- Show data table when loading completes -->
+      <table v-else class="table">
         <thead>
           <tr><th>ID</th><th>Name</th><th>Email</th><th>Actions</th></tr>
         </thead>
@@ -76,14 +83,24 @@ const Users = {
   `,
   data() {
     return {
-      users: UserService.getUsers()
-    }
+      loading: true,
+      users: []
+    };
+  },
+  created() {
+    // Simulate loading delay for skeleton UI
+    setTimeout(() => {
+      this.users = UserService.getUsers();
+      this.loading = false;
+    }, 500);
   },
   methods: {
     editUser(user) {
       this.$router.push(`/users/${user.id}/edit`);
     },
     deleteUser(id) {
+      // Double-check before deleting
+      if (!confirm('Are you sure you want to delete this user?')) return;
       UserService.deleteUser(id);
       this.users = UserService.getUsers();
     }
@@ -423,6 +440,22 @@ const Elements = {
   `
 };
 
+// Async wrapper to lazy-load the Elements component (simulated code-split)
+const ElementsAsync = defineAsyncComponent(() => new Promise(resolve => {
+  setTimeout(() => resolve(Elements), 0);
+}));
+
+// 404 Not Found component for unmatched routes
+const NotFound = {
+  template: `
+    <div class="element-section">
+      <h1 class="element-title">404 - Page Not Found</h1>
+      <p>The page you are looking for doesn't exist.</p>
+      <input type="button" value="Go Home" class="btn_sied" @click="$router.push('/')" />
+    </div>
+  `
+};
+
 const UserService = {
   key: 'admin_users',
   getUsers() {
@@ -573,13 +606,20 @@ const EditUser = {
   }
 };
 
+// Async wrapper to lazy-load the Users component (route-based code-splitting)
+const UsersAsync = defineAsyncComponent(() => new Promise(resolve => {
+  setTimeout(() => resolve(Users), 0);
+}));
+
 const routes = [
   { path: '/', component: Dashboard },
-  { path: '/users', component: Users },
+  { path: '/users', component: UsersAsync },
   { path: '/users/create', component: CreateUser },
   { path: '/users/:id/edit', component: EditUser },
   { path: '/settings', component: Settings },
-  { path: '/elements', component: Elements }
+  { path: '/elements', component: ElementsAsync },
+  // Catch-all 404 route must be last
+  { path: '/:pathMatch(.*)*', component: NotFound }
 ];
 
 const router = VueRouter.createRouter({
