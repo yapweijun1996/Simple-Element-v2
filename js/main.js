@@ -21,8 +21,33 @@ const Dashboard = {
           <input type="button" value="Settings" class="btn_sied" @click="$router.push('/settings')" />
         </div>
       </div>
+
+      <!-- Key Metrics Cards -->
+      <div class="element-section">
+        <h2 class="element-title">Key Metrics</h2>
+        <div class="element-demo metrics-container">
+          <div class="card">
+            <div class="card-title">Total Users</div>
+            <div class="card-value">{{ userCount }}</div>
+          </div>
+          <div class="card">
+            <div class="card-title">Total Orders</div>
+            <div class="card-value">--</div>
+          </div>
+          <div class="card">
+            <div class="card-title">Pending Tasks</div>
+            <div class="card-value">--</div>
+          </div>
+        </div>
+      </div>
     </div>
-  `
+  `,
+  computed: {
+    // Compute the total number of users for the dashboard
+    userCount() {
+      return UserService.getUsers().length;
+    }
+  }
 };
 
 const Users = {
@@ -636,7 +661,9 @@ const App = {
       </ul>
     </nav>
     <main class="content" role="main">
+      <Breadcrumbs></Breadcrumbs>
       <router-view></router-view>
+      <ToastContainer></ToastContainer>
     </main>
   `
 };
