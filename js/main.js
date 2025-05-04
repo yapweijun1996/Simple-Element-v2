@@ -634,19 +634,32 @@ const ToastContainer = {
 
 const App = {
   data() {
-    // sidebarOpen: controls collapsed/expanded sidebar
-    // menuGroups: array of group titles and their menu items
-    // groupOpen: which dropdown groups are expanded
+    // Application state, including sidebar and its dropdown menu groups
     return {
       sidebarOpen: window.innerWidth >= 769,
+      // Tracks open/closed state for each sidebar group by title
+      menuStates: {
+        Core: true,
+        Users: false
+      },
+      // Defines each dropdown section and its navigation items
       menuGroups: [
-        { title: 'Main', items: [ { name: 'Dashboard', path: '/' } ] },
-        { title: 'User Management', items: [ { name: 'View Users', path: '/users' }, { name: 'Create User', path: '/users/create' } ] },
-        { title: 'Configuration', items: [ { name: 'Settings', path: '/settings' } ] },
-        { title: 'Components', items: [ { name: 'UI Elements', path: '/elements' } ] }
-      ],
-      // initially collapse all groups
-      groupOpen: [false, false, false, false]
+        {
+          title: 'Core',
+          items: [
+            { name: 'Dashboard', path: '/' },
+            { name: 'Settings', path: '/settings' },
+            { name: 'UI Elements', path: '/elements' }
+          ]
+        },
+        {
+          title: 'Users',
+          items: [
+            { name: 'User List', path: '/users' },
+            { name: 'Create User', path: '/users/create' }
+          ]
+        }
+      ]
     };
   },
   methods: {
@@ -658,9 +671,9 @@ const App = {
         this.sidebarOpen = false;
       }
     },
-    // Toggle a sidebar dropdown group by index
-    toggleGroup(idx) {
-      this.groupOpen.splice(idx, 1, !this.groupOpen[idx]);
+    // Toggle a specific sidebar group by title
+    toggleGroup(group) {
+      this.menuStates[group] = !this.menuStates[group];
     }
   },
   template: `
@@ -669,13 +682,14 @@ const App = {
       <span class="hamburger-line"></span>
       <span class="hamburger-line"></span>
     </button>
+    <!-- Grouped dropdown sidebar -->
     <nav :class="['sidebar', { open: sidebarOpen }]" aria-label="Main navigation" role="navigation">
-      <!-- Grouped dropdown menu sections -->
-      <div v-for="(group, idx) in menuGroups" :key="group.title" class="sidebar-group">
-        <div class="sidebar-group-title" @click="toggleGroup(idx)">
+      <div v-for="group in menuGroups" :key="group.title" class="sidebar-group">
+        <div class="sidebar-group-title" @click="toggleGroup(group.title)" :aria-expanded="menuStates[group.title]">
           {{ group.title }}
+          <span class="chevron" :class="{ open: menuStates[group.title] }"></span>
         </div>
-        <ul v-show="groupOpen[idx]" class="sidebar-group-list">
+        <ul v-if="menuStates[group.title]" class="sidebar-group-list">
           <li v-for="item in group.items" :key="item.path">
             <router-link :to="item.path" @click="closeSidebar">{{ item.name }}</router-link>
           </li>
