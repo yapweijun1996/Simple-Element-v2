@@ -63,7 +63,7 @@ const Users = {
         <div class="skeleton skeleton-row" v-for="i in 5" :key="i"></div>
       </div>
       <!-- Show data table when loading completes -->
-      <table v-else class="table">
+      <table v-else-if="users.length" class="table">
         <thead>
           <tr><th>ID</th><th>Name</th><th>Email</th><th>Actions</th></tr>
         </thead>
@@ -79,6 +79,9 @@ const Users = {
           </tr>
         </tbody>
       </table>
+      <div v-else class="element-section element-demo">
+        <p>No users found. <input type="button" class="btn_sied" value="Create User" @click="$router.push('/users/create')" /></p>
+      </div>
     </div>
   `,
   data() {
@@ -99,10 +102,12 @@ const Users = {
       this.$router.push(`/users/${user.id}/edit`);
     },
     deleteUser(id) {
-      // Double-check before deleting
-      if (!confirm('Are you sure you want to delete this user?')) return;
-      UserService.deleteUser(id);
-      this.users = UserService.getUsers();
+      // Use centralized confirmation dialog instead of window.confirm
+      this.$root.$refs.confirm.open('Delete this user?').then(ok => {
+        if (!ok) return;
+        UserService.deleteUser(id);
+        this.users = UserService.getUsers();
+      });
     }
   }
 };
@@ -606,20 +611,24 @@ const EditUser = {
   }
 };
 
-// Async wrapper to lazy-load the Users component (route-based code-splitting)
-const UsersAsync = defineAsyncComponent(() => new Promise(resolve => {
-  setTimeout(() => resolve(Users), 0);
-}));
+// Step 6: Lazy-load Users with loading & error boundaries
+const UsersAsync = defineAsyncComponent({
+  loader: () => new Promise(resolve => setTimeout(() => resolve(Users), 0)),
+  loadingComponent: LoadingComponent,
+  errorComponent: ErrorComponent,
+  delay: 200,
+  timeout: 3000
+});
 
+// Step 1: Add route meta titles for breadcrumbs
 const routes = [
-  { path: '/', component: Dashboard },
-  { path: '/users', component: UsersAsync },
-  { path: '/users/create', component: CreateUser },
-  { path: '/users/:id/edit', component: EditUser },
-  { path: '/settings', component: Settings },
-  { path: '/elements', component: ElementsAsync },
-  // Catch-all 404 route must be last
-  { path: '/:pathMatch(.*)*', component: NotFound }
+  { path: '/', component: Dashboard, meta: { title: 'Dashboard' } },
+  { path: '/users', component: UsersAsync, meta: { title: 'Users' } },
+  { path: '/users/create', component: CreateUser, meta: { title: 'Create User' } },
+  { path: '/users/:id/edit', component: EditUser, meta: { title: 'Edit User' } },
+  { path: '/settings', component: Settings, meta: { title: 'Settings' } },
+  { path: '/elements', component: ElementsAsync, meta: { title: 'UI Elements' } },
+  { path: '/:pathMatch(.*)*', component: NotFound, meta: { title: 'Not Found' } }
 ];
 
 const router = VueRouter.createRouter({
@@ -674,15 +683,14 @@ const ToastContainer = {
 
 const App = {
   data() {
-    // Application state, including sidebar and its dropdown menu groups
     return {
       sidebarOpen: window.innerWidth >= 769,
-      // Tracks open/closed state for each sidebar group by title
+      theme: localStorage.getItem('theme') || 'light',
+      searchQuery: '',  // Step 3: search input state
       menuStates: {
         Core: true,
         Users: false
       },
-      // Defines each dropdown section and its navigation items
       menuGroups: [
         {
           title: 'Core',
@@ -702,6 +710,18 @@ const App = {
       ]
     };
   },
+  computed: {
+    // Filter menu items based on search query
+    filteredMenuGroups() {
+      const query = this.searchQuery.toLowerCase();
+      return this.menuGroups
+        .map(group => {
+          const items = group.items.filter(item => item.name.toLowerCase().includes(query));
+          return { ...group, items };
+        })
+        .filter(group => group.items.length > 0);
+    }
+  },
   methods: {
     toggleSidebar() {
       this.sidebarOpen = !this.sidebarOpen;
@@ -711,27 +731,65 @@ const App = {
         this.sidebarOpen = false;
       }
     },
-    // Toggle a specific sidebar group by title
     toggleGroup(group) {
       this.menuStates[group] = !this.menuStates[group];
+    },
+    isGroupActive(title) {
+      return this.$route.matched.some(r => r.meta && r.meta.title === title);
+    },
+    toggleTheme() {
+      this.theme = this.theme === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', this.theme);
+      localStorage.setItem('theme', this.theme);
     }
   },
   template: `
-    <button class="sidebar-toggle" @click="toggleSidebar" aria-label="Toggle navigation menu" :aria-expanded="sidebarOpen">
-      <span class="hamburger-line"></span>
-      <span class="hamburger-line"></span>
-      <span class="hamburger-line"></span>
-    </button>
-    <!-- Grouped dropdown sidebar -->
-    <nav :class="['sidebar', { open: sidebarOpen }]" aria-label="Main navigation" role="navigation">
-      <div v-for="group in menuGroups" :key="group.title" class="sidebar-group">
-        <div class="sidebar-group-title" @click="toggleGroup(group.title)" :aria-expanded="menuStates[group.title]">
+    <ConfirmationDialog ref="confirm" />
+    <button class="sidebar-toggle" @click="toggleSidebar" aria-label="Toggle navigation menu" :aria-expanded="sidebarOpen"></button>
+    <!-- Step 3: Sidebar search filter -->
+    <div class="element-demo" style="padding:8px;">
+      <input
+        type="text"
+        v-model="searchQuery"
+        class="textbox_001_sied"
+        placeholder="Search menu..."
+        aria-label="Search navigation menu"
+      />
+    </div>
+    <div class="topbar-actions">
+      <button class="btn_sied" @click="toggleTheme">{{ theme === 'light' ? '🌞' : '🌜' }}</button>
+    </div>
+    <nav
+      :class="['sidebar', { open: sidebarOpen }]"
+      role="menu"
+      aria-label="Main navigation"
+    >
+      <div v-for="group in filteredMenuGroups" :key="group.title" class="sidebar-group">
+        <div
+          class="sidebar-group-title"
+          @click="toggleGroup(group.title)"
+          :class="{ active: isGroupActive(group.title) }"
+          role="button"
+          :aria-expanded="menuStates[group.title]"
+          :aria-controls="'group-'+group.title"
+        >
           {{ group.title }}
           <span class="chevron" :class="{ open: menuStates[group.title] }"></span>
         </div>
-        <ul v-if="menuStates[group.title]" class="sidebar-group-list">
-          <li v-for="item in group.items" :key="item.path">
-            <router-link :to="item.path" @click="closeSidebar">{{ item.name }}</router-link>
+        <ul
+          v-if="menuStates[group.title]"
+          class="sidebar-group-list"
+          :id="'group-'+group.title"
+          role="menu"
+        >
+          <li
+            v-for="item in group.items"
+            :key="item.path"
+            role="menuitem"
+          >
+            <router-link :to="item.path" @click="closeSidebar">
+              {{ item.name }}
+            </router-link>
           </li>
         </ul>
       </div>
@@ -749,6 +807,7 @@ const app = Vue.createApp(App);
 // Register global components to use anywhere in templates
 app.component('Breadcrumbs', Breadcrumbs);
 app.component('ToastContainer', ToastContainer);
+app.component('ConfirmationDialog', ConfirmationDialog);
 
 app.use(router);
 app.mount('#app'); 

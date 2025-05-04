@@ -721,4 +721,76 @@ nav.sidebar a:focus-visible {
 /* Ensure sidebar scrolls if too long */
 nav.sidebar {
   overflow-y: auto;
+}
+
+/* Skeleton Loading Placeholders */
+.skeleton {
+  background: #e0e0e0;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 10px;
+  position: relative;
+}
+.skeleton-row {
+  height: 20px;
+  width: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0) 0%,
+    rgba(255,255,255,0.4) 50%,
+    rgba(255,255,255,0) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Modal Confirmation Dialog */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+}
+.modal-content {
+  background: var(--backg-color);
+  color: var(--text-color-000);
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+/* Dark Theme Styles */
+[data-theme="dark"] {
+  --backg-color: #353b48;
+  --backg-color-hover: #414952;
+  --main-color: #dfe6e9;
+  --main-color-hover: #ffffff;
+  --main-color-error: #ff7675;
+  --main-color-warning: #ffeaa7;
+  --main-color-success: #55efc4;
+  --text-color-000: #dfe6e9;
+  --text-color-000-hover: #ffffff;
+  background: #2f3640;
+  color: #dfe6e9;
+}
+[data-theme="dark"] header.topbar {
+  background: #353b48;
+  color: #dfe6e9;
+}
+[data-theme="dark"] nav.sidebar {
+  background: #2f3640;
+  color: #dfe6e9;
+}
+[data-theme="dark"] main.content {
+  background: #2d3436;
 } 
