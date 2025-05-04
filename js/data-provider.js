@@ -15,6 +15,9 @@
  *   <script src="js/data-provider.js"></script>
  */
 
+// stockData: lookup table mapping each stock ticker symbol (key) to an object containing
+//   - desc: a human-friendly description of the company
+//   - unique: the unique market identifier (exchange and ticker)
 const stockData = {
   "AAPL": { "desc": "Apple Inc. - Technology", "unique": "NASDAQ: AAPL" },
   "GOOGL": { "desc": "Alphabet Inc. - Technology", "unique": "NASDAQ: GOOGL" },
@@ -35,20 +38,28 @@ const stockData = {
  * @param {HTMLInputElement} uniqueElement - The input element to display the stock unique identifier.
  */
 function updateStockDetails(stockCodeInput, descElement, uniqueElement) {
+  // Wrap the update logic in a try/catch to handle any unexpected errors gracefully.
   try {
+    // Ensure all required HTML elements are provided before proceeding.
     if (!stockCodeInput || !descElement || !uniqueElement) {
       console.error('Missing required elements for updateStockDetails');
       return;
     }
+
+    // Lookup the data entry for the stock code typed by the user.
     const data = stockData[stockCodeInput.value];
+
     if (data) {
+      // If a valid entry is found, update the description and unique ID fields.
       descElement.value = data.desc;
       uniqueElement.value = data.unique;
     } else {
+      // If there's no matching stock code, clear the fields to avoid stale info.
       descElement.value = '';
       uniqueElement.value = '';
     }
   } catch (error) {
+    // Log any unexpected errors to help with debugging.
     console.error('Error updating stock details:', error);
   }
 }
@@ -58,32 +69,39 @@ function updateStockDetails(stockCodeInput, descElement, uniqueElement) {
  * @param {string} dataListId - The id attribute of the <datalist> to populate.
  */
 function populateDatalist(dataListId) {
+  // Use try/catch to keep the app from breaking if something goes wrong during DOM manipulations.
   try {
+    // Retrieve the <datalist> element by its ID from the document.
     const dataList = document.getElementById(dataListId);
-    if (!dataList) return;
-    
-    // Clear existing options
+    if (!dataList) return; // Exit if the element doesn't exist.
+
+    // Clear any existing <option> elements to prevent duplication.
     dataList.innerHTML = '';
-    
-    // Add options from stockData
+
+    // Iterate over every stock ticker in stockData to create an <option> entry.
     Object.keys(stockData).forEach(function(code) {
       const option = document.createElement('option');
+      // Set the option value to the ticker symbol so the user can select it.
       option.value = code;
+      // Display the human-readable description in the dropdown list.
       option.textContent = stockData[code].desc;
+      // Add the newly created <option> into the <datalist> element.
       dataList.appendChild(option);
     });
   } catch (error) {
+    // Log any errors to the console for debugging.
     console.error('Error populating datalist:', error);
   }
 }
 
-// Initialize datalists when page loads
+// Automatically run when the page's HTML has been fully loaded and parsed.
 document.addEventListener('DOMContentLoaded', function() {
   try {
-    // Populate any datalists on the page
+    // Find all <datalist> elements in the document to populate them.
     const datalists = document.querySelectorAll('datalist');
     datalists.forEach(list => {
       if (list.id) {
+        // Only populate <datalist> elements that have an ID attribute.
         populateDatalist(list.id);
       }
     });
