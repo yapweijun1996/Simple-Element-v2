@@ -775,7 +775,7 @@ const App = {
     }
   },
   template: `
-    <ConfirmationDialog ref="confirm" />
+    <confirmation-dialog ref="confirm"></confirmation-dialog>
     <button class="sidebar-toggle" @click="toggleSidebar" aria-label="Toggle navigation menu" :aria-expanded="sidebarOpen"></button>
     <!-- Step 3: Sidebar search filter -->
     <div class="element-demo" style="padding:8px;">
