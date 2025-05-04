@@ -721,4 +721,9 @@ nav.sidebar a:focus-visible {
 /* Ensure sidebar scrolls if too long */
 nav.sidebar {
   overflow-y: auto;
+}
+
+/* Hide empty toast-container placeholder */
+#toast-container:empty {
+  display: none;
 } 
