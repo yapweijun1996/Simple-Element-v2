@@ -1,6 +1,11 @@
 // js/main.js
 const { defineAsyncComponent } = Vue;
 
+// Async loading placeholder shown while component loads
+const LoadingComponent = { template: '<div class="element-demo">Loading...</div>' };
+// Error placeholder shown if loading fails, with retry button
+const ErrorComponent = { template: '<div class="element-usage">Failed to load. <button class="btn_sied" @click="$forceUpdate()">Retry</button></div>' };
+
 const Dashboard = {
   template: `
     <div>
